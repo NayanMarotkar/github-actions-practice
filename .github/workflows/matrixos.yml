@@ -9,7 +9,7 @@ jobs:
   pyos-matrix:
     runs-on: ${{ matrix.os }}
     strategy:
-      fail-fast: false
+     # fail-fast: false
       matrix:
         os: [windows-latest,ubuntu-latest]
         python-version: ["3.10", "3.11", "3.12"]
@@ -26,6 +26,6 @@ jobs:
       - name: Print Python Version
         run: python --version
 
-      - name: Trigger failure
-        if: matrix.python-version == '3.11'
-        run: exit 1
+     # - name: Trigger failure
+     #   if: matrix.python-version == '3.11'
+     #   run: exit 1
