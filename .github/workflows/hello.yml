@@ -21,8 +21,8 @@ jobs:
         run: |
             echo "The triggering branch is $GITHUB_REF_NAME"
 
-      - name: list the repo files
-        run: ls -la
+     # - name: list the repo files
+      #  run: ls -la
 
       - name: runners name
         run: |
