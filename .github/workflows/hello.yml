@@ -27,6 +27,5 @@ jobs:
       - name: runners name
         run: |
             echo "Runners name: $RUNNER_OS"
-
-      - name: code break
-      run: echo "this is to test"
+      - name: Break the workflow on purpose
+        run: exit 1
