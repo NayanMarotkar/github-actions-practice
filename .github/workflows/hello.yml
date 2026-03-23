@@ -21,11 +21,11 @@ jobs:
         run: |
             echo "The triggering branch is $GITHUB_REF_NAME"
 
-     # - name: list the repo files
-      #  run: ls -la
+      - name: list the repo files
+        run: ls -la
 
       - name: runners name
         run: |
             echo "Runners name: $RUNNER_OS"
-      - name: Break the workflow on purpose
-        run: exit 1
+      #- name: Break the workflow on purpose
+     #   run: exit 1
