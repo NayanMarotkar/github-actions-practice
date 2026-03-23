@@ -13,3 +13,15 @@ jobs:
         
       - name: say hello to users
         run: echo "Hello from GitHub Actions!"
+
+      - name: print current time and date
+        run: date
+
+      - name: Display branch name
+        run: echo "The triggering branch is $GITHUB_REF_NAME"
+
+      - name: list the repo files
+        run: ls -la
+
+      - name: runners name
+        run: echo "Runners name: $RUNNER_OS"
