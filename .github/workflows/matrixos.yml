@@ -25,3 +25,7 @@ jobs:
 
       - name: Print Python Version
         run: python --version
+
+      - name: Trigger failure
+        if: matrix.python-version == '3.11'
+        run: exit 1
