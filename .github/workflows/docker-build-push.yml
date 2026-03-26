@@ -18,6 +18,9 @@ jobs:
                 username: ${{ vars.DOCKERHUB_USERNAME }}
                 password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+            - name: debug username
+              run: echo "username=${{ vars.DOCKERHUB_USERNAME }}"
+
             - name: build and push to dockerhub
               uses: docker/build-push-action@v7
               with:
