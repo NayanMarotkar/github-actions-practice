@@ -13,6 +13,13 @@ jobs:
             - name: code checkout
               uses: actions/checkout@v4
 
+            - name: installing docker
+              run: |
+                sudo apt update
+                sudo apt install docker.io docker-compose-plugin -y
+                sudo usermod -aG docker $USER
+                newgrp docker
+
             - name: Set up Docker Compose
               uses: docker/setup-compose-action@v2
               with:
