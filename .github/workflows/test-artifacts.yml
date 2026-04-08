@@ -25,7 +25,7 @@ jobs:
       - name: download from generate-reports
         uses: actions/download-artifact@v4
         with:
-          name: test-report
+          name: reports
 
       - name: print
         run: cat reports/test-report.txt
