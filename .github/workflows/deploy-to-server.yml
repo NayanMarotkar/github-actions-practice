@@ -7,10 +7,14 @@ jobs:
     deploy:
         env:
             DOCKERHUB_USERNAME: ${{ vars.DOCKERHUB_USERNAME }}
+            DoCKER_TAG: ${{ github.event.worflow_run.head_sha}}
         runs-on: ubuntu-latest
         steps:
             - name: checkout code
               uses: actions/checkout@v4
+
+            - name: set docker_tag env variable
+              run: echo "DOCKER_TAG=${{ github.event.workflow_run.head_sha }}" >> $GITHUB_ENV
 
             
             - name: ssh to prod server
