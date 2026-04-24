@@ -56,9 +56,16 @@ jobs:
                     sudo docker --version
                     sudo docker compose version
                     
+                    cd ~/devops   # 🔥 MOVE FIRST
+
+                    # Create .env INSIDE devops folder
                     echo "DOCKERHUB_USERNAME=${{ vars.DOCKERHUB_USERNAME }}" > .env
                     echo "DOCKER_TAG=${{ github.event.workflow_run.head_sha }}" >> .env
 
+                    # Debug (optional but helpful)
+                    cat .env
+
+                    # Login
                     echo "${{ secrets.DOCKERHUB_TOKEN }}" | sudo docker login \
                     --username "${{ vars.DOCKERHUB_USERNAME }}" \
                     --password-stdin
