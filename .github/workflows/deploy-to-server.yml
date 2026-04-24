@@ -12,7 +12,7 @@ jobs:
               with:
                 host: ${{ secrets.ec2_HOST }}
                 username: ${{ secrets.ec2_USERNAME }}
-                password: ${{ secrets.EC2_SSH_KEY }}
+                key: ${{ secrets.EC2_SSH_KEY }}
                 script: |
                     echo "starting deployment"
                     mkdir devops
