@@ -57,6 +57,8 @@ jobs:
                     sudo docker compose version
                     
                     export DOCKERHUB_USERNAME=${{ vars.DOCKERHUB_USERNAME }}
+                    export DOCKER_TAG=${{ github.event.workflow_run.head_sha }}
+                    echo ${{ github.sha}}
 
                     # Login to Dockerhub (non-interactive)
                     echo "${{ secrets.DOCKERHUB_TOKEN }}" | sudo docker login \
