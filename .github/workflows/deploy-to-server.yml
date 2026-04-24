@@ -40,6 +40,7 @@ jobs:
                     echo "Running app"
                     sudo apt update && sudo apt upgrade -y
                     sudo apt get install docker.io -y 
+                    sudo usermod -aG docker $USER && newgrp docker
                     DOCKER_CONFIG=${DOCKER_CONFIG:-$HOME/.docker}
                     mkdir -p $DOCKER_CONFIG/cli-plugins
 
@@ -47,7 +48,7 @@ jobs:
                     -o $DOCKER_CONFIG/cli-plugins/docker-compose
 
                     chmod +x $DOCKER_CONFIG/cli-plugins/docker-compose
-                    sudo usermod -aG docker $USER && newgrp docker
+                    
                     export DOCKERHUB_USERNAME=${{ vars.DOCKERHUB_USERNAME }}
                     export DOCKER_TAG=${{ github.event.workflow_run.head_sha }}
                     echo ${{secrets.DOCKERHUB_TOKEN}} | docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin  
