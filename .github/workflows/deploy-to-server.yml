@@ -56,12 +56,10 @@ jobs:
                     sudo docker --version
                     sudo docker compose version
                     
-                    export DOCKERHUB_USERNAME=${{ vars.DOCKERHUB_USERNAME }}
-                    export DOCKER_TAG=${{ github.event.workflow_run.head_sha }}
-                    echo ${{ github.sha}}
+                    echo "DOCKERHUB_USERNAME=${{ vars.DOCKERHUB_USERNAME }}" > .env
+                    echo "DOCKER_TAG=${{ github.event.workflow_run.head_sha }}" >> .env
 
-                    # Login to Dockerhub (non-interactive)
                     echo "${{ secrets.DOCKERHUB_TOKEN }}" | sudo docker login \
                     --username "${{ vars.DOCKERHUB_USERNAME }}" \
-                    --password-stdin  
+                    --password-stdin
                     cd ~/devops && sudo docker compose up -d --build --force-recreate --pull always
