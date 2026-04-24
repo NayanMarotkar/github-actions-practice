@@ -60,8 +60,7 @@ jobs:
 
                     # Create .env INSIDE devops folder
                     echo "DOCKERHUB_USERNAME=${{ vars.DOCKERHUB_USERNAME }}" > .env
-                    echo "DOCKER_TAG=${{ github.event.workflow_run.head_sha }}" >> .env
-
+                    echo "DOCKER_TAG=${{ github.sha }}" >> .env
                     # Debug (optional but helpful)
                     cat .env
 
