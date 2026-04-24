@@ -1,3 +1,5 @@
+# issue or vernerabilities scan
+# pip-audit 
 name: dependency scan
 
 on:
@@ -18,5 +20,5 @@ jobs:
             - name: install pip audit
               run: pip install pip-audit
 
-            - name: audit dpendency
+            - name: audit dependencies
               run: pip-audit -r requirements.txt
