@@ -7,6 +7,10 @@ jobs:
     deploy:
         runs-on: ubuntu-latest
         steps:
+            - name: checkout code
+              uses: actions/checkout@v4
+
+            
             - name: ssh to prod server
               uses: appleboy/ssh-action@v1
               with:
@@ -15,4 +19,36 @@ jobs:
                 key: ${{ secrets.EC2_SSH_KEY }}
                 script: |
                     echo "starting deployment"
-                    mkdir devops
+                    mkdir -p devops
+
+            - name: copy the docker compose file
+              uses: appleboy/scp-action@v0.1.3
+              with:
+                host: ${{ secrets.ec2_HOST }}
+                username: ${{ secrets.ec2_USERNAME }}
+                key: ${{ secrets.EC2_SSH_KEY }}
+                source: docker-compose.yml 
+                target: ~/devops
+
+            - name: ssh to prod server and run the app
+              uses: appleboy/ssh-action@v1
+              with:
+                host: ${{ secrets.ec2_HOST }}
+                username: ${{ secrets.ec2_USERNAME }}
+                key: ${{ secrets.EC2_SSH_KEY }}
+                script: |
+                    echo "Running app"
+                    sudo apt update && sudo apt upgrade -y
+                    sudo apt get install docker.io -y 
+                    DOCKER_CONFIG=${DOCKER_CONFIG:-$HOME/.docker}
+                    mkdir -p $DOCKER_CONFIG/cli-plugins
+
+                    curl -SL https://github.com/docker/compose/releases/latest/download/docker-compose-linux-x86_64 \
+                    -o $DOCKER_CONFIG/cli-plugins/docker-compose
+
+                    chmod +x $DOCKER_CONFIG/cli-plugins/docker-compose
+                    sudo usermod -aG docker $USER && newgrp docker
+                    export DOCKERHUB_USERNAME=${{ vars.DOCKERHUB_USERNAME }}
+                    export DOCKER_TAG=${{ github.event.workflow_run.head_sha }}
+                    echo ${{secrets.DOCKERHUB_TOKEN}} | docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin  
+                    cd ~/devops && docker compose up -d --build --force-recreate --pull always
