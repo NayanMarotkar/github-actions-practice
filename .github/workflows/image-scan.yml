@@ -1,4 +1,4 @@
-name: image scan
+name: image scanner # scan the docker image for cve issue
 
 on:
   workflow_call:
@@ -15,7 +15,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Trivy image scanner
-        uses: aquasecurity/trivy-action@0.33.1
+        uses: aquasecurity/trivy-action@v0.36.0
         with:
           image-ref: ${{ vars.DOCKERHUB_USERNAME }}/github-actions-app:latest
           severity: CRITICAL
